@@ -1887,7 +1887,7 @@ class LibrationDiagramBinder(AnalemmaBinder):
         ys = (lats.degrees-min_lat)*y_factor+y0
         xs = (lons-min_lon)*x_factor+x0
         # Moon phases
-        if 1209600<=(timespan[1]-timespan[0])<=2678400:
+        if 1209600<=(timespan[1]-timespan[0])<=2682000:
             t_phases, k_phases = skyfield.almanac.find_discrete(t0, t1, skyfield.almanac.moon_phases(user.skyfieldalmanac.ephemerides))
             p = (observer-body).at(t_phases)
             lats_phases, lons_phases, _ = p.frame_latlon(user.skyfieldalmanac.frames[user.skyfieldalmanac.EARTHMOON])
