@@ -6,6 +6,8 @@ tags into your own skin.
 
 ## Usage
 
+First install both almanac extensions using [the main instructions](../../README.md#installation-instructions).
+
 Primarily the template should serve as an example for you to create your
 own templates. But you can also use it as a skin in WeeWX.
 
@@ -16,7 +18,7 @@ to your `weewx.conf` file to the `[StdReport]` section:
     [[SkymapReport]]
         skin = Skymap
         enable = true
-        lang = ISO_code_of_your_language_here
+        lang = en
         HTML_ROOT = /var/www/html/skymap
 ```
 

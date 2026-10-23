@@ -7,8 +7,9 @@ this extension.
 
 ## Usage
 
-Simply replace the original `celestial.inc` file of the Seasons skin by
-the file provided here.
+Install the extensions using [the main instructions](../../README.md#installation-instructions).
+Back up your Seasons skin, then copy the provided `celestial.inc` into its
+skin directory, replacing that include. This is a manual template change.
 
 ![Seasons skin almanac page](../../doc-images/Seasons-example.png)
 
@@ -46,7 +47,7 @@ In the above example, that would be:
 ```
 
 For more information see 
-[weewx-skyfield-alamanc readme](https://github.com/roe-dl/weewx-skyfield-almanac?tab=readme-ov-file#earth-satellites)
+[weewx-skyfield-alamanc readme](https://github.com/weewx-packages/weewx-skyfield-almanac/blob/master/Customization.md#earth-satellites)
 and
 [CelesTrak](https://celestrak.org/NORAD/elements/).
 
@@ -90,10 +91,9 @@ Distance      | Distance      | Entfernung | Afstand     | Vzdálenost | fra et 
 
 ## Troubleshooting
 
-You can switch off the almanac extensions by setting `enable=false` in
-section `[Almanac]` in `weewx.conf`. Try switching off the Skymap extension 
-first, and if the error persists, the Skyfield extension, too. Make sure
-to restart WeeWX after changing `weewx.conf`.
+To switch off Skymap, set `enable = false` in `[Almanac] [[Skymap]]` in
+`weewx.conf`. If the error persists, also set `enable = false` in
+`[Almanac] [[Skyfield]]`. Restart WeeWX after changing `weewx.conf`.
 
 This replacement page checks for the availability of the extensions and
 regards it appropriately.

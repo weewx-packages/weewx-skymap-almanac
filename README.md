@@ -1,5 +1,14 @@
 # weewx-skymap-almanac
-Sky map, Moon with phase and tilt, and astronomical diagrams for WeeWX
+Generate SVG sky maps, Moon phase and tilt images, analemmas and other
+astronomical diagrams in WeeWX Cheetah templates. This extends the Skyfield
+almanac; it does not install a complete website.
+
+This repository mirrors [the upstream source](https://github.com/roe-dl/weewx-skymap-almanac). The maintained
+catalog archive is **0.7.post1**, carrying the complete GPL license text. Install that fixed archive below;
+the mirrored default branch can differ from its repaired payload.
+
+The catalog archive targets WeeWX `>=5.5.2,<6` and Python `>=3.10,<3.15`.
+
 
 ![sky map](doc-images/Seasons-example.png)
 
@@ -28,54 +37,48 @@ Sky map, Moon with phase and tilt, and astronomical diagrams for WeeWX
 
 ## Prerequisites
 
-WeeWX from version 5.3 on and weewx-skyfield-almanac
-
-> [!NOTE]
-> You have to install weewx-skyfield-almanac first before installing this
-> extension.
-
-> [!NOTE]
-> You need the actual version of weewx-skyfield-almanac together with this
-> extension.
+Install the matching Skyfield almanac extension first, together with its
+Skyfield, NumPy and Requests dependencies. Pandas and the Hipparcos catalog
+are needed for star plotting. Follow the
+[Skyfield setup instructions](https://github.com/weewx-packages/weewx-skyfield-almanac#readme)
+for data downloads and initialization. The source requires WeeWX 5.3 or later;
+the maintained archive uses the catalog range above.
 
 ## Installation instructions
 
-1) download
+Use stock WeeWX's archive installer for both dependencies, in WeeWX's Python
+environment:
 
-   ```shell
-   wget -O weewx-skymap-almanac.zip https://github.com/roe-dl/weewx-skymap-almanac/archive/master.zip
-   ```
+```sh
+weectl extension install https://github.com/weewx-packages/catalog/releases/download/skyfield-almanac/v0.7.post1/skyfield-almanac-0.7.post1.tar.gz --config /path/to/weewx.conf
+```
 
-2) run the installer
+Use `weectl` from the Python environment running WeeWX. With stock WeeWX 5,
+install the published archive:
 
-   WeeWX from version 5.3 on and WeeWX packet installation
+```sh
+weectl extension install https://github.com/weewx-packages/catalog/releases/download/skymap-almanac/v0.7.post1/skymap-almanac-0.7.post1.tar.gz --config /path/to/weewx.conf
+```
 
-   ```shell
-   sudo weectl extension install weewx-skymap-almanac.zip
-   ```
+Replace `/path/to/weewx.conf` with your station configuration. You can also
+download that URL and pass the local archive to the same command. Use elevated
+permissions only when your station files require them.
 
-   WeeWX from version 5.3 on and WeeWX pip installation into an virtual environment
+The installer adds `user.skymapalmanac.SkymapService` as a prep service and
+installs `bin/user/skymapalmanac.py` and `bin/user/constellationship.fab`.
+It enables `[Almanac] [[Skymap]] enable = true`.
 
-   ```shell
-   source ~/weewx-venv/bin/activate
-   weectl extension install weewx-skymap-almanac.zip
-   ```
-   
-3) restart weewx
+Restart WeeWX yourself and wait for Skyfield's ephemeris initialization.
+Add this to a Cheetah template to render a map in your next report:
 
-   for SysVinit systems:
+```cheetah
+$almanac.skymap
+```
 
-   ```shell
-   sudo /etc/init.d/weewx stop
-   sudo /etc/init.d/weewx start
-   ```
-
-   for systemd systems:
-
-   ```shell
-   sudo systemctl stop weewx
-   sudo systemctl start weewx
-   ```
+The [examples](examples/README.md) include a Seasons replacement, a Standard
+page and a standalone Skymap skin. They require manual copying and report
+configuration; the extension installer does not install those example skins.
+Use a copy of an existing skin and preserve your customized templates.
 
 ## Configuration instructions
 
@@ -658,7 +661,7 @@ found within `weewx.conf` in section `StdReport`.
 
 The maps and diagrams provided by this extension use additional keys.
 You have to put them into the language files of your skin in order to
-get localized texts. Put them in sub-section `[[Astronomcial]]` of
+get localized texts. Put them in sub-section `[[Astronomical]]` of
 section `[Texts]`.
 
 * `First point of Aries`
@@ -745,3 +748,10 @@ element level after `$almanac` only.
 * [Skymap example page](https://www.woellsdorf-wetter.de/maps/skymap.html)
 * [Moon symbol example page](https://www.woellsdorf-wetter.de/clock/moon.html?longitude=Woellsdorf)
 * [Search subdirectory lang for additional translation files](https://github.com/weewx/weewx/commit/9a4c1558c1337221398e44612fe408e1542991e2) (2026-02-28)
+
+## License and origin
+
+Copyright 2025-2026 Johanna Karen Roedenbeck and credited contributors.
+[GNU GPLv3 or later](LICENSE). Constellation lines come from Stellarium's
+`constellationship.fab`; retain the supplied attribution. Diagram availability
+depends on initialized Skyfield data and the bodies covered by your kernels.

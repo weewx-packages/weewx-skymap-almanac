@@ -5,7 +5,8 @@ data and diagrams.
 
 ## Usage
 
-Copy the file `almanac.html.tmpl` to the directory of the Standard skin.
+Install both extensions using [the main instructions](../../README.md#installation-instructions)
+and back up your skin first. Copy the file `almanac.html.tmpl` to the directory of the Standard skin.
 Then open `skin.conf` and add the following lines before the `[[[RSS]]]`
 line:
 
@@ -22,12 +23,11 @@ other buttons:
         <input type="button" value=$pgettext("Buttons","Almanac") onclick="openURL('almanac.html')" />
 ```
 
-![Almanac](../../doc-images/Standard-example.png)
 
 ## Localization
 
 To adapt the labels to your language look for the appropriate language
-file in the `lang` subdirectory of the Seasons skin. For example, if you 
+file in the `lang` subdirectory of your Standard skin. For example, if you
 are french, look for `fr.conf`. There you can add the words you need to 
 translate. 
 
