@@ -37,32 +37,43 @@ The catalog archive targets WeeWX `>=5.5.2,<6` and Python `>=3.10,<3.15`.
 
 ## Prerequisites
 
-Install the matching Skyfield almanac extension first, together with its
-Skyfield, NumPy and Requests dependencies. Pandas and the Hipparcos catalog
-are needed for star plotting. Follow the
-[Skyfield setup instructions](https://github.com/weewx-packages/weewx-skyfield-almanac#readme)
+Activate the virtual environment that runs WeeWX before using `python` or
+`weectl`. Install Skyfield, NumPy and Requests, plus Pandas for Hipparcos star
+plotting, before installing either extension:
+
+```sh
+python -m pip install --only-binary=:all: 'skyfield>=1.49' 'numpy' 'requests' 'pandas'
+```
+
+This command uses wheels and requires no native build tools. It requires wheels
+for your Python version and platform. For a system installation, use equivalent
+distribution packages in WeeWX's Python environment where available. Neither
+extension installer installs these Python packages.
+
+The matching Skyfield almanac extension also needs a writable data directory
+and Internet access for its configured ephemeris and catalog downloads. Follow
+the [Skyfield setup instructions](https://github.com/weewx-packages/weewx-skyfield-almanac/blob/weewx-packages-docs/README.md#prerequisites)
 for data downloads and initialization. The source requires WeeWX 5.3 or later;
 the maintained archive uses the catalog range above.
 
 ## Installation instructions
 
-Use stock WeeWX's archive installer for both dependencies, in WeeWX's Python
-environment:
+Replace `/path/to/weewx.conf` with your existing station configuration. Use
+stock WeeWX's archive installer in the same environment to install the Skyfield
+almanac extension first:
 
 ```sh
 weectl extension install https://github.com/weewx-packages/catalog/releases/download/skyfield-almanac/v0.7.post1/skyfield-almanac-0.7.post1.tar.gz --config /path/to/weewx.conf
 ```
 
-Use `weectl` from the Python environment running WeeWX. With stock WeeWX 5,
-install the published archive:
+Then install the Skymap archive:
 
 ```sh
 weectl extension install https://github.com/weewx-packages/catalog/releases/download/skymap-almanac/v0.7.post1/skymap-almanac-0.7.post1.tar.gz --config /path/to/weewx.conf
 ```
 
-Replace `/path/to/weewx.conf` with your station configuration. You can also
-download that URL and pass the local archive to the same command. Use elevated
-permissions only when your station files require them.
+You can also download that URL and pass the local archive to the same command.
+Use elevated permissions only when your station files require them.
 
 The installer adds `user.skymapalmanac.SkymapService` as a prep service and
 installs `bin/user/skymapalmanac.py` and `bin/user/constellationship.fab`.
